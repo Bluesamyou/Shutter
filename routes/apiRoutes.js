@@ -1,11 +1,11 @@
 var jwt = require("jsonwebtoken");
 
-module.exports = function (app) {
-  app.post("/api/login", function (req, res) {
+module.exports = function(app) {
+  app.post("/api/login", function(req, res) {
     console.log("in the login endpoint");
     console.log(req.params);
 
-    jwt.sign({ user: user }, "MySecretKey", function (err, token) {
+    jwt.sign({ user: user }, "MySecretKey", function(err, token) {
       if (err) {
         throw err;
       }
@@ -19,15 +19,15 @@ module.exports = function (app) {
 
   //register: storing name, email and password and redirecting to home page after signup
 
-  app.post("/api/create-user", function (req, res) {
+  app.post("/api/create-user", function(req, res) {
     // var User = req.body;
-    bcrypt.hash(req.body.passwordsignup, saltRounds, function (err, hash) {
+    bcrypt.hash(req.body.passwordsignup, saltRounds, function(err, hash) {
       db.User.create({
         name: req.body.usernamesignup,
         email: req.body.emailsignup,
         password: hash
       })
-        .then(function (data) {
+        .then(function(data) {
           if (data) {
             res.status(200).json({
               success: true,
@@ -35,7 +35,7 @@ module.exports = function (app) {
             });
           }
         })
-        .catch(function (err) {
+        .catch(function(err) {
           if (err) {
             res.status(500).json({ success: false, message: err.message });
           }
@@ -44,17 +44,17 @@ module.exports = function (app) {
   });
 
   //login page: storing and comparing email and password,and redirecting to home page after login
-  app.post("/api/user", function (req, res) {
+  app.post("/api/user", function(req, res) {
     // var User = req.body;
     db.User.findOne({
       where: {
         email: req.body.email
       }
-    }).then(function (user) {
+    }).then(function(user) {
       if (!user) {
         res.redirect("/");
       } else {
-        bcrypt.compare(req.body.password, user.password, function (err, result) {
+        bcrypt.compare(req.body.password, user.password, function(err, result) {
           if (result === true) {
             res.redirect("/home");
           } else {
