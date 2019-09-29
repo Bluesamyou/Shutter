@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+    <script src="../js/signup.js"></script>
     <link rel="stylesheet" href="../styles/styles.css">
     <title>Shutter</title>
 </head>
@@ -18,13 +21,14 @@
 
         <div class="login-container">
             <div class="container">
-                <h2>Login</h2>
+                <h2>Sign up</h2>
+                <input type="username" class="login-input" placeholder="Username">
                 <input type="email" class="login-input" placeholder="Email">
                 <input type="password" class="login-input" placeholder="Password">
                 <div class="button-group">
-                    <button>Submit</button>
+                    <button class="submit-button">Submit</button>
                 </div>
-                <a href="/signup">go to signup</a>
+                <a href="/login">go to login</a>
             </div>
         </div>
 

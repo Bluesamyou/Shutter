@@ -72,3 +72,10 @@ body{
   border: none; 
   border-radius: 25px;
 }
+
+.login-container a{
+  text-align: center;
+  display: block; 
+  text-decoration: none; 
+  color: #D56637;
+}
