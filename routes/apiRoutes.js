@@ -5,8 +5,6 @@ module.exports = function(app) {
     console.log("in the login endpoint");
     console.log(req.params);
 
-    var user = { id: 1, username: "shutter", email: "shutter@gmail.com" };
-
     jwt.sign({ user: user }, "MySecretKey", function(err, token) {
       if (err) {
         throw err;
@@ -15,7 +13,7 @@ module.exports = function(app) {
     });
   });
 
-  var db = require("./models");
+  var db = require("../models");
   var bcrypt = require("bcrypt");
   var saltRounds = 10;
 
@@ -28,11 +26,20 @@ module.exports = function(app) {
         name: req.body.usernamesignup,
         email: req.body.emailsignup,
         password: hash
-      }).then(function(data) {
-        if (data) {
-          res.redirect("/home");
-        }
-      });
+      })
+        .then(function(data) {
+          if (data) {
+            res.status(200).json({
+              success: true,
+              message: "Succesfully added in user " + data.name
+            });
+          }
+        })
+        .catch(function(err) {
+          if (err) {
+            res.status(500).json({ success: false, message: err.message });
+          }
+        });
     });
   });
 
