@@ -48,7 +48,7 @@ module.exports = function(app) {
         res.redirect("/");
       } else {
         bcrypt.compare(req.body.password, user.password, function(err, result) {
-          if (result == true) {
+          if (result === true) {
             res.redirect("/home");
           } else {
             res.send("Incorrect password");
