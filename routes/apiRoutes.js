@@ -26,11 +26,20 @@ module.exports = function (app) {
         name: req.body.usernamesignup,
         email: req.body.emailsignup,
         password: hash
-      }).then(function (data) {
-        if (data) {
-          res.redirect("/home");
-        }
-      });
+      })
+        .then(function (data) {
+          if (data) {
+            res.status(200).json({
+              success: true,
+              message: "Succesfully added in user " + data.name
+            });
+          }
+        })
+        .catch(function (err) {
+          if (err) {
+            res.status(500).json({ success: false, message: err.message });
+          }
+        });
     });
   });
 
