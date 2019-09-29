@@ -1,5 +1,5 @@
-$(document).ready(function () {
-  $(".submit-button").on("click", function (event) {
+$(document).ready(function() {
+  $(".submit-button").on("click", function(event) {
     // Prevent default action to refresh page
     event.preventDefault();
 
@@ -22,7 +22,7 @@ $(document).ready(function () {
         usernamesignup: username,
         passwordsignup: password
       }
-    }).then(function (data) {
+    }).then(function(data) {
       if (data.success) {
         // Fires success modal
         Swal.fire({
@@ -32,7 +32,7 @@ $(document).ready(function () {
           showCancelButton: false,
           confirmButtonColor: "#3085d6",
           confirmButtonText: "Proceed"
-        }).then(function (result) {
+        }).then(function(result) {
           if (result.value) {
             // Reloads to login page
             location.href = "/login";
