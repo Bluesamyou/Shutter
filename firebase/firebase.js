@@ -1,5 +1,6 @@
 var express = require("express");
-var images = require("../models/images");
+var Images = require("../models/images");
+console.log(Images);
 var app = express();
 var googleStorage = require("@google-cloud/storage");
 var Multer = require("multer");
@@ -64,6 +65,7 @@ var uploadImageToStorage = function uploadImageToStorage(file) {
 
     blobStream.on("error", function(error) {
       reject("Something is wrong! Unable to upload at the moment.");
+      console.log(error);
     });
 
     blobStream.on("finish", function() {
