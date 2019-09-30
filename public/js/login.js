@@ -21,7 +21,7 @@ $(document).ready(function() {
       .then(function(data) {
         if (data.success) {
           console.log(data);
-
+          localStorage.setItem("account", JSON.stringify(data.data));
           // Fires success modal
           Swal.fire({
             title: "Successfully logged in as " + data.data.username,
