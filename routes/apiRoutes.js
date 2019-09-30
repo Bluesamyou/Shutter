@@ -1,4 +1,5 @@
 var jwt = require("jsonwebtoken");
+var toonavatar = require("cartoon-avatar");
 
 module.exports = function(app) {
   // app.post("/api/login", function(req, res) {
@@ -24,7 +25,8 @@ module.exports = function(app) {
       db.User.create({
         name: req.body.usernamesignup,
         email: req.body.emailsignup,
-        password: hash
+        password: hash,
+        avatar: toonavatar.generate_avatar()
       })
         .then(function(data) {
           if (data) {
@@ -63,7 +65,8 @@ module.exports = function(app) {
             var client = {
               id: user.id,
               username: user.name,
-              email: user.email
+              email: user.email,
+              avatar: user.avatar
             };
             jwt.sign({ data: client }, "secretkey", function(err, token) {
               if (err) {
