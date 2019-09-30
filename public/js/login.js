@@ -16,24 +16,40 @@ $(document).ready(function() {
     $.ajax({
       method: "POST",
       url: "/api/login",
-      data: {}
-    }).then(function(data) {
-      if (data.success) {
-        // Fires success modal
+      data: { email: email, password: password }
+    })
+      .then(function(data) {
+        if (data.success) {
+          console.log(data);
+
+          // Fires success modal
+          Swal.fire({
+            title: "Successfully logged in as " + data.data.username,
+            type: "success",
+            showCancelButton: false,
+            confirmButtonColor: "#3085d6",
+            confirmButtonText: "Proceed"
+          }).then(function(result) {
+            if (result.value) {
+              location.href = "/main";
+            }
+          });
+        }
+      })
+      .fail(function(err) {
+        console.log(err);
         Swal.fire({
-          title: "Account Successfully Created",
-          text: "Please login with your account details",
-          type: "success",
+          title: "Error logging in",
+          text: err.responseJSON.message,
+          type: "error",
           showCancelButton: false,
           confirmButtonColor: "#3085d6",
           confirmButtonText: "Proceed"
         }).then(function(result) {
           if (result.value) {
-            // Reloads to login page
             location.href = "/login";
           }
         });
-      }
-    });
+      });
   });
 });
