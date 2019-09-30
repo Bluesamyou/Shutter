@@ -6,13 +6,13 @@ module.exports = function(sequelize, DataTypes) {
             autoIncrement: true,
             allowNull: false
         },
-        user_id: {
+        userId: {
             type: DataTypes.INTEGER,
         },
-        image_url: {
+        imageUrl: {
             type: DataTypes.INTEGER
         },
-        download_credit_amount: {
+        downloadCreditAmount: {
             type: DataTypes.INTEGER
         }
     });
