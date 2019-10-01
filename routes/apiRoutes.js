@@ -101,4 +101,31 @@ module.exports = function(app) {
       }
     });
   });
+
+  app.get("api/images", function(req, res) {
+    db.Images.findAll({}).then(function(allUserImages) {
+      res.json(allUserImages);
+    });
+  });
+
+  app.post("/api/images/:id/likes", function(req, res) {
+    db.Images.findOne({
+      where: {
+        id: req.params.id
+      }
+    }).then(function(images) {
+      if (images === null) {
+        console.log("dhafdas");
+        console.log(images);
+        res.status(404);
+        res.send();
+      } else {
+        images.increment("likes");
+        // first from the images we need to find the user
+        // we have user - so we need to find user's credits
+        // credits - need to increment the field
+        // send it back to client
+      }
+    });
+  });
 };
