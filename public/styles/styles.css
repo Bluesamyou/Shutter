@@ -6,8 +6,7 @@ body {
 }
 
 .login {
-  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
-    url("../images/background.jpg");
+  background: #d56637;
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -31,7 +30,8 @@ body {
 }
 
 .login-container div:nth-child(1) {
-  background: white;
+  background: rgb(61, 61, 61);
+  box-shadow: 8px 8px 8px rgba(0, 0, 0, 0.25);
   /* border: 1px solid black; */
   padding: 10px 20px;
   border-radius: 10px;
@@ -40,13 +40,14 @@ body {
 .login-container h2 {
   text-align: center;
   font-size: 30px;
-  color: rgb(53, 53, 53);
+  color: white;
 }
 
 .login-container input {
-  background: rgba(0, 0, 0, 0.07);
+  background: rgba(255, 255, 255, 0.3);
   display: block;
   margin-bottom: 10px;
+  color: white;
 }
 
 .login-input {
@@ -54,6 +55,10 @@ body {
   border: none;
   padding: 10px 100px;
   border-radius: 25px;
+}
+
+.login-container input::placeholder {
+  color: white;
 }
 
 .button-group {
@@ -78,30 +83,25 @@ body {
 }
 
 .card-container {
+  display: grid;
+  justify-content: center;
   height: 100vh;
-  background: linear-gradient(-180deg, #bcc5ce 0%, #929ead 98%),
-    radial-gradient(
-      at top left,
-      rgba(255, 255, 255, 0.3) 0%,
-      rgba(0, 0, 0, 0.3) 100%
-    );
-  background-blend-mode: screen;
+  background: #d56637;
 }
 .card {
   margin: 10px;
   width: 18em;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  background: white;
-  /* border: 1px solid rgba(0, 0, 0, 0.2); */
+  box-shadow: 8px 8px 8px rgba(0, 0, 0, 0.25);
+  background: rgb(61, 61, 61);
   border-radius: 15px;
-  padding: 10px;
+  padding: 10px 0;
   display: inline-block;
 }
 
 .card-header {
   text-align: center;
   font-family: "Cutive", serif;
-  color: #d56637;
+  color: white;
   padding: 10px 0;
 }
 
@@ -121,4 +121,6 @@ body {
   color: white;
   margin: 5px;
   font-size: 17px;
+  width: 40px;
+  height: 40px;
 }
