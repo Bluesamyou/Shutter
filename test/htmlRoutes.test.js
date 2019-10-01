@@ -9,7 +9,7 @@
 
 // var request;
 
-// describe("GET /api/examples", function() {
+// describe("GET /api/login", function() {
 //   // Before each test begins, create a new request server for testing
 //   // & delete all examples from the db
 //   beforeEach(function() {
