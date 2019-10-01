@@ -11,11 +11,15 @@
   },
   "license": "ISC",
   "dependencies": {
+    "@google-cloud/storage": "^3.3.0",
     "bcrypt": "^3.0.6",
+    "cartoon-avatar": "^1.0.2",
     "dotenv": "^8.0.0",
     "express": "^4.17.0",
     "express-handlebars": "^3.1.0",
+    "firebase": "^7.0.0",
     "jsonwebtoken": "^8.5.1",
+    "multer": "^1.4.2",
     "mysql2": "^1.6.5",
     "sequelize": "^5.8.6"
   },

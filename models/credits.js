@@ -15,5 +15,3 @@ module.exports = function(sequelize, DataTypes) {
   });
   return Credits;
 };
-
-("SELECT * FROM Credits UPDATE = 'totalCredits'");

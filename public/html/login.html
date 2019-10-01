@@ -1,35 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="../styles/styles.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="../styles/styles.css" />
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.js"
+      integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+    <script src="../js/login.js"></script>
     <title>Shutter</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <div class="login">
-        <div class="login-header-container">
-            <img src="../images/logo.svg" alt="" style="margin-top: 50px;">
-            <h1>Shutter</h1>
-        </div>
+      <div class="login-header-container">
+        <img src="../images/logo.svg" alt="" style="margin-top: 50px;" />
+        <h1>Shutter</h1>
+      </div>
 
-        <div class="login-container">
-            <div class="container">
-                <h2>Login</h2>
-                <input type="email" class="login-input" placeholder="Email">
-                <input type="password" class="login-input" placeholder="Password">
-                <div class="button-group">
-                    <button>Submit</button>
-                </div>
-                <a href="/signup">go to signup</a>
-            </div>
+      <div class="login-container">
+        <div class="container">
+          <h2>Login</h2>
+          <input
+            type="email"
+            class="login-input"
+            id="email"
+            placeholder="Email"
+          />
+          <input
+            type="password"
+            class="login-input"
+            id="password"
+            placeholder="Password"
+          />
+          <div class="button-group">
+            <button class="submit-button">Submit</button>
+          </div>
+          <a href="/signup">go to signup</a>
         </div>
-
+      </div>
     </div>
-
-</body>
-
+  </body>
 </html>
