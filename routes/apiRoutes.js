@@ -1,22 +1,15 @@
 var jwt = require("jsonwebtoken");
+var admin = require("firebase-admin");
 var toonavatar = require("cartoon-avatar");
+var db = require("../models");
+var bcrypt = require("bcrypt");
 
 module.exports = function(app) {
-  // app.post("/api/login", function(req, res) {
-  //   console.log(req.params);
-
-  //   jwt.sign({ user: user }, "MySecretKey", function(err, token) {
-  //     if (err) {
-  //       throw err;
-  //     }
-  //     res.json({ token: token });
-  //   });
-  // });
-
-  var db = require("../models");
-  var bcrypt = require("bcrypt");
   var saltRounds = 10;
-
+  admin.initializeApp({
+    credential: admin.credential.applicationDefault(),
+    storageBucket: "shutter-102c2.appspot.com"
+  });
   //register: storing name, email and password and redirecting to home page after signup
 
   app.post("/api/create-user", function(req, res) {
