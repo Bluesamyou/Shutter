@@ -44,5 +44,11 @@ module.exports = function(sequelize, DataTypes) {
     return bcrypt.compareSync(password, bcrypt.genSaltSync(8), null);
   };
 
+  User.associate = function(models) {
+    User.hasMany(models.Images);
+    // We're saying that a Post should belong to an Author
+    // A Post can't be created without an Author due to the foreign key constraint
+    User.hasOne(models.Credits);
+  };
   return User;
 };
