@@ -23,9 +23,16 @@ module.exports = function(app) {
       })
         .then(function(data) {
           if (data) {
-            res.status(200).json({
-              success: true,
-              message: "Succesfully added in user " + data.name
+            db.Credits.create({
+              userId: data.id,
+              totalCredits: 200
+            }).then(function(data) {
+              if (data) {
+                res.status(200).json({
+                  success: true,
+                  message: "Succesfully added in user " + data.name
+                });
+              }
             });
           }
         })
