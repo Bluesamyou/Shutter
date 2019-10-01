@@ -31,7 +31,7 @@ $(document).ready(function() {
             confirmButtonText: "Proceed"
           }).then(function(result) {
             if (result.value) {
-              location.href = "/main";
+              location.href = "/";
             }
           });
         }
