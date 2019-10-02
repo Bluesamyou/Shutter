@@ -1,5 +1,6 @@
 var jwt = require("jsonwebtoken");
 var admin = require("firebase-admin");
+console.log(admin);
 var toonavatar = require("cartoon-avatar");
 var db = require("../models");
 var path = require("path");
@@ -115,6 +116,7 @@ module.exports = function(app) {
   });
 
   app.post("/api/upload", function(req, res, next) {
+    console.log(next);
     upload(req, res, function(err) {
       if (err) {
         res.status(500).end();
