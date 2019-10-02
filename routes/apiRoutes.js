@@ -2,14 +2,26 @@ var jwt = require("jsonwebtoken");
 var admin = require("firebase-admin");
 var toonavatar = require("cartoon-avatar");
 var db = require("../models");
+var path = require("path");
 var bcrypt = require("bcrypt");
+var multer = require("multer");
 
 module.exports = function(app) {
   var saltRounds = 10;
-  admin.initializeApp({
-    credential: admin.credential.applicationDefault(),
-    storageBucket: "shutter-102c2.appspot.com"
+
+  var storage = multer.diskStorage({
+    destination: function destination(req, file, cb) {
+      cb(null, "./public/uploads");
+    },
+    filename: function filename(req, file, cb) {
+      cb(
+        null,
+        file.fieldname + "-" + Date.now() + path.extname(file.originalname)
+      );
+    }
   });
+
+  var upload = multer({ storage: storage }).single("upload-image");
   //register: storing name, email and password and redirecting to home page after signup
 
   app.post("/api/create-user", function(req, res) {
@@ -98,6 +110,16 @@ module.exports = function(app) {
             });
           }
         });
+      }
+    });
+  });
+
+  app.post("/api/upload", function(req, res, next) {
+    upload(req, res, function(err) {
+      if (err) {
+        res.status(500).end();
+      } else {
+        res.send(req.file);
       }
     });
   });
