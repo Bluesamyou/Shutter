@@ -10,7 +10,7 @@ module.exports = function(sequelize, DataTypes) {
     //   type: DataTypes.INTEGER
     // },
     imageUrl: {
-      type: DataTypes.INTEGER
+      type: DataTypes.STRING
     },
     downloadCreditAmount: {
       type: DataTypes.INTEGER
