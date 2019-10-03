@@ -20,7 +20,9 @@ module.exports = function(app) {
     }
   });
 
-  var upload = multer({ storage: storage }).single("upload-image");
+  var upload = multer({
+    storage: storage
+  }).single("upload-image");
   //register: storing name, email and password and redirecting to home page after signup
 
   app.post("/api/create-user", function(req, res) {
@@ -120,13 +122,18 @@ module.exports = function(app) {
     });
   });
 
-  app.post("/api/upload", function(req, res, next) {
-    console.log(next);
+  app.post("/api/upload", function(req, res) {
     upload(req, res, function(err) {
       if (err) {
+        console.log(err);
         res.status(500).end();
       } else {
-        res.send(req.file);
+        db.Images.create({
+          imageUrl: req.file.path,
+          downloadCreditAmount: 20,
+          likes: 0
+        });
+        console.log(req.file);
       }
     });
   });
