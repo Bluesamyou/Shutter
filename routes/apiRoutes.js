@@ -137,19 +137,19 @@ module.exports = function(app) {
       });
   });
 
-  app.post("/api/upload", function(req, res, next) {
-    console.log(next);
+  app.post("/api/upload", function(req, res) {
     upload(req, res, function(err) {
       if (err) {
         console.log(err);
         res.status(500).end();
       } else {
         db.Images.create({
-          imageUrl: req.file.path,
+          imageUrl: "uploads/" + req.file.filename,
           downloadCreditAmount: 20,
-          likes: 0
+          likes: 0,
+          UserId: req.body.user
         });
-        console.log(req.file);
+        res.status(200).redirect("/");
       }
     });
   });

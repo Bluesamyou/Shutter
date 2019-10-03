@@ -83,10 +83,10 @@ body {
 }
 
 .card-container {
-  display: grid;
-  justify-content: center;
+  display: block;
   height: 93vh;
   background: #d56637;
+  overflow: scroll;
 }
 .card {
   margin: 10px;
