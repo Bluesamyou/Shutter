@@ -36,17 +36,23 @@ module.exports = function(app) {
       })
         .then(function(data) {
           if (data) {
+            console.log(data.id);
             db.Credits.create({
               userId: data.id,
               totalCredits: 200
-            }).then(function(data) {
-              if (data) {
-                res.status(200).json({
-                  success: true,
-                  message: "Succesfully added in user " + data.name
-                });
-              }
-            });
+            })
+              .then(function(data) {
+                if (data) {
+                  res.status(200).json({
+                    success: true,
+                    message: "Succesfully added in user " + data.name
+                  });
+                }
+              })
+              .catch(function(err) {
+                console.log(err);
+                res.status(500).end();
+              });
           }
         })
         .catch(function(err) {
@@ -96,7 +102,8 @@ module.exports = function(app) {
                 data: {
                   token: token,
                   username: user.name,
-                  email: user.email
+                  email: user.email,
+                  avatar: user.avatar
                 }
               });
             });
@@ -126,7 +133,7 @@ module.exports = function(app) {
     });
   });
 
-  app.get("api/images", function(req, res) {
+  app.get("/api/images", function(req, res) {
     db.Images.findAll({}).then(function(allUserImages) {
       res.json(allUserImages);
     });

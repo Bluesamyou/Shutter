@@ -31,6 +31,13 @@ module.exports = function(sequelize, DataTypes) {
       minlength: 3,
       maxlength: 255,
       len: [2, 10]
+    },
+    avatar: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      required: true,
+      maxlength: 255,
+      len: [10, 50]
     }
   });
 
