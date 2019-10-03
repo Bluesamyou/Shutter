@@ -10,7 +10,7 @@ module.exports = function(sequelize, DataTypes) {
     //   type: DataTypes.INTEGER
     // },
     imageUrl: {
-      type: DataTypes.INTEGER
+      type: DataTypes.STRING
     },
     downloadCreditAmount: {
       type: DataTypes.INTEGER
@@ -23,8 +23,6 @@ module.exports = function(sequelize, DataTypes) {
 
   Images.associate = function(models) {
     Images.belongsTo(models.User);
-    // We're saying that a Post should belong to an Author
-    // A Post can't be created without an Author due to the foreign key constraint
   };
   return Images;
 };
