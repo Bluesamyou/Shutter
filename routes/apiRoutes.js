@@ -37,8 +37,9 @@ module.exports = function(app) {
         .then(function(data) {
           if (data) {
             console.log(data.id);
+            console.log(db.Credits);
             db.Credits.create({
-              userId: data.id,
+              UserId: data.id,
               totalCredits: 200
             })
               .then(function(data) {
@@ -102,6 +103,7 @@ module.exports = function(app) {
                 data: {
                   token: token,
                   username: user.name,
+                  id: user.id,
                   email: user.email,
                   avatar: user.avatar
                 }
@@ -120,6 +122,19 @@ module.exports = function(app) {
         });
       }
     });
+  });
+
+  app.get("/api/credits/:id", function(req, res) {
+    db.Credits.findOne({
+      where: { UserId: req.params.id }
+    })
+      .then(function(userCredit) {
+        res.status(200).json({ credits: userCredit.totalCredits });
+      })
+      .catch(function(err) {
+        console.log(err);
+        res.status(500).end();
+      });
   });
 
   app.post("/api/upload", function(req, res, next) {
