@@ -11,7 +11,6 @@ var PORT = process.env.PORT || 3000;
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(express.static("public"));
-app.use("/upload", express.static("upload"));
 
 // Handlebars
 app.engine(

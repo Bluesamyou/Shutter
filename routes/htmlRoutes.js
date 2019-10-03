@@ -22,7 +22,7 @@ module.exports = function(app) {
     res.sendFile(path.join(__dirname, "../public/html/user.html"));
   });
 
-  app.get("/test", function(req, res) {
-    res.sendFile(path.join(__dirname, "../public/html/testdata.html"));
+  app.get("/image-upload", function(req, res) {
+    res.sendFile(path.join(__dirname, "../public/html/imageupload.html"));
   });
 };
