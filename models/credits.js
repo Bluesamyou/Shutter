@@ -15,9 +15,6 @@ module.exports = function(sequelize, DataTypes) {
   });
 
   Credits.associate = function(models) {
-    // We're saying that a Post should belong to an Author
-    // A Post can't be created without an Author due to the foreign key constraint
-
     // credits will get a new column called userId
     Credits.belongsTo(models.User, {
       foreignKey: {

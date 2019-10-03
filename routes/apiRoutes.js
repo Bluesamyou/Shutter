@@ -72,23 +72,40 @@ module.exports = function(app) {
     });
   });
 
-  app.post("/api/images/:id/likes", function(req, res) {
+  app.post("/api/image/:id/likes", function(req, res) {
     db.Images.findOne({
       where: {
         id: req.params.id
       }
-    }).then(function(images) {
-      if (images === null) {
+    }).then(function(image) {
+      if (image === null) {
         console.log("dhafdas");
-        console.log(images);
+        console.log(image);
         res.status(404);
         res.send();
       } else {
-        images.increment("likes");
         // first from the images we need to find the user
-        // we have user - so we need to find user's credits
-        // credits - need to increment the field
-        // send it back to client
+        db.User.findOne({
+          where: {
+            userId: image.id
+          }
+        })
+          .then(function(credit) {
+            // we have user - so we need to find user's credits
+            return db.Credits.findOne({
+              where: {
+                userId: credit.id
+              }
+            });
+          })
+          .then(function(incrementCredit) {
+            // credits - need to increment the field
+            return incrementCredit.increment("totalCredits");
+          })
+          .then(function(showCredits) {
+            // send it back to client
+            res.json(showCredits);
+          });
       }
     });
   });
