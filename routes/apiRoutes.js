@@ -1,6 +1,4 @@
 var jwt = require("jsonwebtoken");
-var admin = require("firebase-admin");
-console.log(admin);
 var toonavatar = require("cartoon-avatar");
 var db = require("../models");
 var path = require("path");
