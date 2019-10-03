@@ -77,6 +77,66 @@ $("document").ready(function() {
     });
   });
 
+  $(".card-container").on("click", ".donate", function(e) {
+    e.preventDefault();
+    var id = $(this).attr("data-attr");
+    if (localStorage.getItem("account")) {
+      $.ajax({
+        method: "GET",
+        url: "/api/credits/" + account.id
+      }).then(function(data) {
+        credits = data.credits;
+
+        Swal.fire({
+          title: "Enter a donations amount",
+          html: "<P> Total Credits : " + credits + "</P>",
+          input: "number",
+          inputAttributes: {
+            autocapitalize: "off"
+          },
+          showCancelButton: true,
+          confirmButtonText: "Donate",
+          showLoaderOnConfirm: true,
+          preConfirm: function(donation) {
+            return $.ajax({
+              method: "POST",
+              url: "/api/donate"
+            })
+              .then(response => {
+                if (!response.ok) {
+                  throw new Error(response.statusText);
+                }
+                return response.json();
+              })
+              .catch(error => {
+                Swal.showValidationMessage(`Request failed: ${error}`);
+              });
+          },
+          allowOutsideClick: () => !Swal.isLoading()
+        }).then(result => {
+          if (result.value) {
+            Swal.fire({
+              title: `${result.value.login}'s avatar`,
+              imageUrl: result.value.avatar_url
+            });
+          }
+        });
+      });
+    } else {
+      Swal.fire({
+        title: "You need to be logged in to donate",
+        type: "info",
+        showCancelButton: false,
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: "Login"
+      }).then(function(result) {
+        if (result.value) {
+          location.href = "/login";
+        }
+      });
+    }
+  });
+
   $(".user-footer").on("click", ".upload-image", function(e) {
     e.preventDefault();
     $(".image-upload-input").click();

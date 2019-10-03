@@ -137,6 +137,8 @@ module.exports = function(app) {
       });
   });
 
+  app.get("/api/donate", function(req, res) {});
+
   app.post("/api/upload", function(req, res) {
     upload(req, res, function(err) {
       if (err) {
