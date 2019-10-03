@@ -6,9 +6,6 @@ module.exports = function(sequelize, DataTypes) {
       autoIncrement: true,
       allowNull: false
     },
-    // userId: {
-    //   type: DataTypes.INTEGER
-    // },
     totalCredits: {
       type: DataTypes.INTEGER
     }
