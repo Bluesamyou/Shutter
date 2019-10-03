@@ -155,7 +155,9 @@ module.exports = function(app) {
   });
 
   app.get("/api/images", function(req, res) {
-    db.Images.findAll({}).then(function(allUserImages) {
+    db.Images.findAll({ order: [["likes", "DESC"]] }).then(function(
+      allUserImages
+    ) {
       res.json(allUserImages);
     });
   });
@@ -166,33 +168,25 @@ module.exports = function(app) {
         id: req.params.id
       }
     }).then(function(image) {
+      console.log(image.UserId);
       if (image === null) {
         console.log("dhafdas");
         console.log(image);
-        res.status(404);
-        res.send();
+        res.status(500).end();
       } else {
+        image.increment("likes");
         // first from the images we need to find the user
-        db.User.findOne({
+        db.Credits.findOne({
           where: {
-            userId: image.id
+            UserId: image.UserId
           }
         })
           .then(function(credit) {
-            // we have user - so we need to find user's credits
-            return db.Credits.findOne({
-              where: {
-                userId: credit.id
-              }
-            });
+            credit.increment("totalCredits");
+            res.status(200).end();
           })
-          .then(function(incrementCredit) {
-            // credits - need to increment the field
-            return incrementCredit.increment("totalCredits");
-          })
-          .then(function(showCredits) {
-            // send it back to client
-            res.json(showCredits);
+          .catch(function(err) {
+            console.log(err);
           });
       }
     });
