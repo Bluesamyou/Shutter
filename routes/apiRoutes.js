@@ -1,6 +1,4 @@
 var jwt = require("jsonwebtoken");
-var admin = require("firebase-admin");
-console.log(admin);
 var toonavatar = require("cartoon-avatar");
 var db = require("../models");
 var path = require("path");
@@ -22,7 +20,9 @@ module.exports = function(app) {
     }
   });
 
-  var upload = multer({ storage: storage }).single("upload-image");
+  var upload = multer({
+    storage: storage
+  }).single("upload-image");
   //register: storing name, email and password and redirecting to home page after signup
 
   app.post("/api/create-user", function(req, res) {
@@ -141,9 +141,15 @@ module.exports = function(app) {
     console.log(next);
     upload(req, res, function(err) {
       if (err) {
+        console.log(err);
         res.status(500).end();
       } else {
-        res.send(req.file);
+        db.Images.create({
+          imageUrl: req.file.path,
+          downloadCreditAmount: 20,
+          likes: 0
+        });
+        console.log(req.file);
       }
     });
   });
@@ -154,23 +160,40 @@ module.exports = function(app) {
     });
   });
 
-  app.post("/api/images/:id/likes", function(req, res) {
+  app.post("/api/image/:id/likes", function(req, res) {
     db.Images.findOne({
       where: {
         id: req.params.id
       }
-    }).then(function(images) {
-      if (images === null) {
+    }).then(function(image) {
+      if (image === null) {
         console.log("dhafdas");
-        console.log(images);
+        console.log(image);
         res.status(404);
         res.send();
       } else {
-        images.increment("likes");
         // first from the images we need to find the user
-        // we have user - so we need to find user's credits
-        // credits - need to increment the field
-        // send it back to client
+        db.User.findOne({
+          where: {
+            userId: image.id
+          }
+        })
+          .then(function(credit) {
+            // we have user - so we need to find user's credits
+            return db.Credits.findOne({
+              where: {
+                userId: credit.id
+              }
+            });
+          })
+          .then(function(incrementCredit) {
+            // credits - need to increment the field
+            return incrementCredit.increment("totalCredits");
+          })
+          .then(function(showCredits) {
+            // send it back to client
+            res.json(showCredits);
+          });
       }
     });
   });
