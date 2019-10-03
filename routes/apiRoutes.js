@@ -124,7 +124,7 @@ module.exports = function(app) {
     });
   });
 
-  app.post("/api/upload", function(req, res, next) {
+  app.post("/api/upload", function(req, res) {
     upload(req, res, function(err) {
       if (err) {
         console.log(err);
