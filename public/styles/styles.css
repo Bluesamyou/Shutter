@@ -83,6 +83,7 @@ body {
 }
 
 .card-container {
+  text-align: center;
   display: block;
   height: 93vh;
   background: #d56637;

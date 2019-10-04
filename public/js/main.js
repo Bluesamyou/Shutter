@@ -36,11 +36,17 @@ $("document").ready(function() {
     data.forEach(function(image) {
       card =
         "<div class='card'><div class='card-header'>" +
-        "Credits : " +
-        image.downloadCreditAmount +
-        "</div><div class='card-image'><img class='card-image' src='/" +
+        "Likes : " +
+        image.likes +
+        "</div><div class='card-image'><img class='card-image' width='300' height='200' src='" +
         image.imageUrl +
-        "' alt='' /></div><div class='card-button-container'><button class='like'><i class='far fa-heart'></i></button><button class='donate'><i class='fas fa-donate'></i></button><button class='download'><i class='fas fa-cloud-download-alt'></i></button></div></div>";
+        "' alt='' /></div><div class='card-button-container'><button class='like' data-attr='" +
+        image.id +
+        "'><i class='far fa-heart'></i></button><button class='donate'><i class='fas fa-donate' data-attr='" +
+        image.id +
+        "'></i></button><button class='download'><i class='fas fa-cloud-download-alt' data-attr='" +
+        image.id +
+        "'></i></button></div></div>";
       $(".card-container").append(card);
     });
   });
@@ -48,6 +54,27 @@ $("document").ready(function() {
   $(".login-button").on("click", function(e) {
     e.preventDefault();
     window.location.href = "/login";
+  });
+
+  $(".card-container").on("click", ".like", function(e) {
+    e.preventDefault();
+    var id = $(this).attr("data-attr");
+    $.ajax({
+      method: "POST",
+      url: "/api/image/" + id + "/likes"
+    }).then(function() {
+      Swal.fire({
+        title: "Image liked",
+        type: "success",
+        showCancelButton: false,
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: "Proceed"
+      }).then(function(result) {
+        if (result.value) {
+          location.href = "/";
+        }
+      });
+    });
   });
 
   $(".user-footer").on("click", ".upload-image", function(e) {
