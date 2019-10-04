@@ -91,6 +91,7 @@ body {
   overflow: scroll;
 }
 .card {
+  opacity: 100%;
   margin: 10px;
   width: 18em;
   box-shadow: 8px 8px 8px rgba(0, 0, 0, 0.25);

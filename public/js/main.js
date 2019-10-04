@@ -48,37 +48,37 @@ $("document").ready(function() {
         image.id +
         "'><i class='fas fa-cloud-download-alt'></i></button></div></div>";
       $(".card-container").append(card);
-      var scene = new Scene(
-        {
-          ".card": function(index) {
-            return {
-              0: {
-                opacity: 0,
-                transform: "translate(0px, 0px)"
-              },
-              0.5: {
-                opacity: 0.5,
-                transform: "translate(0px, -20px)"
-              },
-              1: {
-                opacity: 1,
-                transform: "translate(0px, 0px)"
-              },
-              options: {
-                delay: index * 0.5
-              }
-            };
-          }
-        },
-        {
-          duration: 2,
-          easing: Scene.EASE_IN_OUT,
-          selector: true
-        }
-      ).playCSS();
-
-      console.log(scene);
     });
+    var scene = new Scene(
+      {
+        ".card": function(index) {
+          return {
+            0: {
+              opacity: 0,
+              transform: "translate(0px, 0px)"
+            },
+            0.5: {
+              opacity: 0.5,
+              transform: "translate(0px, -20px)"
+            },
+            1: {
+              opacity: 1,
+              transform: "translate(0px, 0px)"
+            },
+            options: {
+              delay: index * 0.5
+            }
+          };
+        }
+      },
+      {
+        duration: 2,
+        easing: Scene.EASE_IN_OUT,
+        selector: true
+      }
+    ).playCSS();
+
+    console.log(scene);
   });
 
   $(".login-button").on("click", function(e) {
