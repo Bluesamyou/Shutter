@@ -162,6 +162,7 @@ module.exports = function(app) {
                       parseInt(req.body.donationAmount)
                   })
                   .then(function(success) {
+                    console.log(success);
                     res.status(200).redirect("/");
                   });
               }

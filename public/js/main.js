@@ -110,6 +110,7 @@ $("document").ready(function() {
                 }
               })
                 .then(function(response) {
+                  console.log(response);
                   window.location.reload("/");
                 })
                 .catch(function(error) {
