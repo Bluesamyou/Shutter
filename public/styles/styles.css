@@ -27,6 +27,7 @@ body {
   justify-content: center;
   align-items: center;
   width: 100%;
+  animation: fade-in 1s ease-in-out 0s;
 }
 
 .login-container div:nth-child(1) {
@@ -168,4 +169,13 @@ p {
 
 .swal2-confirm {
   background: #d56637 !important;
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 100%;
+  }
 }
