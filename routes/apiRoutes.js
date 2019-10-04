@@ -137,6 +137,53 @@ module.exports = function(app) {
       });
   });
 
+  app.post("/api/donate", function(req, res) {
+    console.log(req.body.donationAmount);
+    db.Credits.findOne({ where: { UserId: req.body.userId } }).then(function(
+      donateUser
+    ) {
+      console.log(donateUser);
+      donateUser
+        .update({
+          totalCredits: donateUser.totalCredits - req.body.donationAmount
+        })
+        .then(function(updatedUser) {
+          console.log(req.body.imageId);
+          console.log(updatedUser);
+          db.Images.findOne({ where: { id: req.body.imageId } }).then(function(
+            image
+          ) {
+            db.Credits.findOne({ where: { UserId: image.UserId } }).then(
+              function(donateRec) {
+                donateRec
+                  .update({
+                    totalCredits:
+                      donateUser.totalCredits +
+                      parseInt(req.body.donationAmount)
+                  })
+                  .then(function(success) {
+                    console.log(success);
+                    res.status(200).redirect("/");
+                  });
+              }
+            );
+          });
+        });
+    });
+  });
+
+  app.get("/api/downloadUrl/:id", function(req, res) {
+    db.Images.findOne({
+      where: { id: req.params.id }
+    })
+      .then(function(image) {
+        res.status(200).json({ url: image.imageUrl });
+      })
+      .catch(function(err) {
+        console.log(err);
+        res.status(500).end();
+      });
+  });
   app.post("/api/upload", function(req, res) {
     upload(req, res, function(err) {
       if (err) {
