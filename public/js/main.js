@@ -42,11 +42,11 @@ $("document").ready(function() {
         image.imageUrl +
         "' alt='' /></div><div class='card-button-container'><button class='like' data-attr='" +
         image.id +
-        "'><i class='far fa-heart'></i></button><button class='donate'><i class='fas fa-donate' data-attr='" +
+        "'><i class='far fa-heart'></i></button><button class='donate' data-attr='" +
         image.id +
-        "'></i></button><button class='download'><i class='fas fa-cloud-download-alt' data-attr='" +
+        "'><i class='fas fa-donate'></i></button><button class='download' data-attr='" +
         image.id +
-        "'></i></button></div></div>";
+        "'><i class='fas fa-cloud-download-alt'></i></button></div></div>";
       $(".card-container").append(card);
     });
   });
@@ -78,8 +78,8 @@ $("document").ready(function() {
   });
 
   $(".card-container").on("click", ".donate", function(e) {
-    e.preventDefault();
     var id = $(this).attr("data-attr");
+    e.preventDefault();
     if (localStorage.getItem("account")) {
       $.ajax({
         method: "GET",
@@ -98,27 +98,30 @@ $("document").ready(function() {
           confirmButtonText: "Donate",
           showLoaderOnConfirm: true,
           preConfirm: function(donation) {
-            return $.ajax({
-              method: "POST",
-              url: "/api/donate"
-            })
-              .then(response => {
-                if (!response.ok) {
-                  throw new Error(response.statusText);
+            if (parseInt(donation) <= parseInt(credits)) {
+              console.log($(this).attr("data-attr"));
+              return $.ajax({
+                method: "POST",
+                url: "/api/donate",
+                data: {
+                  userId: account.id,
+                  donationAmount: donation,
+                  imageId: id
                 }
-                return response.json();
               })
-              .catch(error => {
-                Swal.showValidationMessage(`Request failed: ${error}`);
-              });
+                .then(function(response) {
+                  window.location.reload("/");
+                })
+                .catch(function(error) {
+                  console.log(error);
+                  Swal.showValidationMessage("Request failed: " + error);
+                });
+            } else {
+              Swal.showValidationMessage("Not enough credits");
+            }
           },
-          allowOutsideClick: () => !Swal.isLoading()
-        }).then(result => {
-          if (result.value) {
-            Swal.fire({
-              title: `${result.value.login}'s avatar`,
-              imageUrl: result.value.avatar_url
-            });
+          allowOutsideClick: function() {
+            !Swal.isLoading();
           }
         });
       });
@@ -135,6 +138,35 @@ $("document").ready(function() {
         }
       });
     }
+  });
+
+  $(".card-container").on("click", ".download", function(e) {
+    e.preventDefault();
+    var id = $(this).attr("data-attr");
+    $.ajax({
+      method: "GET",
+      url: "/api/credits/" + account.id
+    }).then(function(data) {
+      if (data.credits >= 20) {
+        Swal.fire({
+          title: "Are you sure?",
+          text: "Downloading this image will cost 20 credits",
+          type: "info",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          confirmButtonText: "Proceed"
+        }).then(function(result) {
+          if (result.value) {
+            $.ajax({
+              method: "GET",
+              url: "/api/downloadUrl/" + id
+            }).then(function(data) {
+              window.location.href = data.url;
+            });
+          }
+        });
+      }
+    });
   });
 
   $(".user-footer").on("click", ".upload-image", function(e) {
